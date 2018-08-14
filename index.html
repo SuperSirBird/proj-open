@@ -4,9 +4,25 @@
 <body>
   <h1>Proj-Open</h1>
   <canvas style="border:1px solid #000000;" width="480" height="360"></canvas><br>
-  <input value="https://scratch.mit.edu/projects/12624412/" id="project"><button>Open</button>
+  <input value="12624412" id="projectid"><button onclick="openproj">Open</button>
   
   <script>
+    function openproj() {
+      var projid = document.getElementById("projectid").value;
+      
+      // Get .sb2
+      var xhttp = new XMLHttpRequest();
+      xhttp.onreadystatechange = function() {
+        if (this.readyState == 4 && this.status == 200) {
+          // Typical action to be performed when the document is ready:
+          var sbfile = xhttp.responseText;
+          document.body.innerHTML = sbfile;
+        }
+      };
+      xhttp.open("GET", "https://projects.scratch.mit.edu/internalapi/project/" + projid + "/get/", true);
+      xhttp.send();
+      
+    }
     //https://projects.scratch.mit.edu/internalapi/project/[proj id]/get/
     //https://cdn.assets.scratch.mit.edu/internalapi/asset/[assetname].[png/wav+more]/get/
     //
